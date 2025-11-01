@@ -3,13 +3,14 @@ import fs from 'fs/promises';
 
 export const readContacts = async () => {
   try {
-    const data = await fs.readFile(PATH_DB);
-    // console.log(JSON.parse(data));
+    const data = await fs.readFile(PATH_DB, 'utf-8');
+    if (!data) {
+      console.log('No contacts found!');
+      return [];
+    }
     return JSON.parse(data);
   } catch (error) {
     console.error('Error reading contacts:', error);
     throw error;
   }
 };
-
-// readContacts();
