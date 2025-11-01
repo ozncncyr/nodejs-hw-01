@@ -1,13 +1,22 @@
-import { createFakeContact } from '../utils/createFakeContact';
-import { writeContacts } from '../utils/writeContacts';
+import { createFakeContact } from '../utils/createFakeContact.js';
+import { writeContacts } from '../utils/writeContacts.js';
+import { readContacts } from '../utils/readContacts.js';
 
 const generateContacts = async (number) => {
-  const contacts = Array.from({ length: number }, createFakeContact);
-  await writeContacts(contacts);
-  console.log(`Generated ${number} fake contacts.`);
-  return contacts;
+  try {
+    const existedContacts = await readContacts();
+    const newContacts = Array.from({ length: number }, () =>
+      createFakeContact(),
+    );
+    return [...existedContacts, ...newContacts];
+  } catch (error) {
+    console.error('Error generating contacts:', error);
+    throw error;
+  }
 };
 
-writeContacts(await generateContacts(5));
-
-export default generateContacts;
+generateContacts(5)
+  .then((contacts) => writeContacts(contacts))
+  .catch((error) =>
+    console.error('Error in contact generation pipeline:', error),
+  );
