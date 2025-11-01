@@ -10,4 +10,8 @@ export const countContacts = async () => {
   }
 };
 
-console.log('Total Contacts: ', await countContacts());
+if ((await countContacts()) === 0) {
+  console.log('No contacts found.');
+} else {
+  console.log('Total Contacts: ', await countContacts());
+}

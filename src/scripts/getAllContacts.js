@@ -10,4 +10,9 @@ export const getAllContacts = async () => {
   }
 };
 
-console.log(await getAllContacts());
+const contacts = await getAllContacts();
+if (contacts.length === 0) {
+  console.log('No contacts found.');
+} else {
+  console.log(`Listing ${contacts.length} Contacts:`, contacts);
+}
