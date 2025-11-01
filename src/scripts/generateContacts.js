@@ -21,7 +21,7 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-rl.question('How many contacts would you like to generate? ', (answer) => {
+rl.question('How many contacts would you like to generate: ', (answer) => {
   const number = parseInt(answer, 10);
   if (isNaN(number) || number <= 0) {
     console.log('Please enter a valid number greater than 0.');
@@ -31,6 +31,9 @@ rl.question('How many contacts would you like to generate? ', (answer) => {
 
   generateContacts(number)
     .then((contacts) => writeContacts(contacts))
+    .then(() => console.log(`\n${number} contacts generated and saved.`))
+    .then(() => readContacts())
+    .then((contacts) => console.log(`\nTotal contacts:`, contacts.length))
     .catch((error) =>
       console.error('Error in contact generation pipeline:', error),
     )
