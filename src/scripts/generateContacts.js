@@ -3,7 +3,7 @@ import { writeContacts } from '../utils/writeContacts.js';
 import { readContacts } from '../utils/readContacts.js';
 import readline from 'readline';
 
-const generateContacts = async (number) => {
+export const generateContacts = async (number) => {
   try {
     const existedContacts = await readContacts();
     const newContacts = Array.from({ length: number }, () =>
